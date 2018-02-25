@@ -1,0 +1,22 @@
+SMAP
+liste_005fcli_005fadmini_jsp.java
+JSP
+*S JSP
+*F
++ 0 liste_cli_admini.jsp
+liste_cli_admini.jsp
++ 1 header.jsp
+header.jsp
++ 2 menu_admin.jsp
+menu_admin.jsp
++ 3 footer.jsp
+footer.jsp
+*L
+5,5:51
+5#1,123:56
+9#0,614:178
+5#2,28:792
+622#0,4:820
+5#3,120:824
+625#0,6:944
+*E
