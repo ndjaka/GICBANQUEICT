@@ -1,0 +1,22 @@
+SMAP
+information_005fcli_jsp.java
+JSP
+*S JSP
+*F
++ 0 information_cli.jsp
+information_cli.jsp
++ 1 header.jsp
+header.jsp
++ 2 menu_client.jsp
+menu_client.jsp
++ 3 footer.jsp
+footer.jsp
+*L
+5,5:51
+5#1,123:56
+9#0,23:178
+5#2,34:201
+31#0,4:235
+5#3,120:239
+34#0,9:359
+*E

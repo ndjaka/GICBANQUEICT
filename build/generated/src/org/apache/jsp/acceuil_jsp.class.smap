@@ -1,0 +1,17 @@
+SMAP
+acceuil_jsp.java
+JSP
+*S JSP
+*F
++ 0 acceuil.jsp
+acceuil.jsp
++ 1 header.jsp
+header.jsp
++ 2 footer.jsp
+footer.jsp
+*L
+5,8:50
+5#1,123:58
+12#0,274:180
+5#2,120:454
+*E

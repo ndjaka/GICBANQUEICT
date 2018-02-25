@@ -20,16 +20,16 @@
                         solde
                         <i class="fa fa-align-center"></i>
                </a>
-               <a href="#" class="list-group-item ">
+                <a href="transaction_client.jsp" class="list-group-item ">
                    voir les dernieres transactions&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-up"></i><i class="fa fa-arrow-down"></i>
                </a>
-               <a href="#" class="list-group-item ">
+                <a href="message.jsp" class="list-group-item ">
                    envoyer un message &nbsp;&nbsp;&nbsp;<i class="fa fa-send "></i>
                </a>
-                <a href="#" class="list-group-item ">
+                <a href="information_cli.jsp" class="list-group-item ">
                  voir ces informations &nbsp;&nbsp;&nbsp;<i class="fa fa-info-circle "></i>
                </a>
-                <a href="#" class="list-group-item ">
+                <a href="virementcli.jsp" class="list-group-item ">
                     effectuer un virement &nbsp;&nbsp;&nbsp;<i class="fa fa-exchange "></i>
                </a>
            </div>

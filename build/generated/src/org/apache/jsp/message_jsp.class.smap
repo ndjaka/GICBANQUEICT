@@ -1,0 +1,22 @@
+SMAP
+message_jsp.java
+JSP
+*S JSP
+*F
++ 0 message.jsp
+message.jsp
++ 1 header.jsp
+header.jsp
++ 2 menu_client.jsp
+menu_client.jsp
++ 3 footer.jsp
+footer.jsp
+*L
+5,5:51
+5#1,123:56
+9#0,61:178
+5#2,34:239
+69#0,4:273
+5#3,120:277
+72#0,4:397
+*E
