@@ -1,0 +1,22 @@
+SMAP
+transaction_005fclient_jsp.java
+JSP
+*S JSP
+*F
++ 0 transaction_client.jsp
+transaction_client.jsp
++ 1 header.jsp
+header.jsp
++ 2 menu_client.jsp
+menu_client.jsp
++ 3 footer.jsp
+footer.jsp
+*L
+5,5:51
+5#1,124:56
+9#0,635:179
+5#2,34:814
+643#0,4:848
+5#3,120:852
+646#0,17:972
+*E
