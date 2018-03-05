@@ -24,6 +24,13 @@ public class Admin extends User implements Serializable {
     public Admin(String login, String password) {
         super(login, password);
     }
+
+    @Override
+    public String getRole() {
+        //throw new UnsupportedOperationException("Not supported yet."); 
+       //To change body of generated methods, choose Tools | Templates.
+        return "Admin";
+    }
     
     
 }

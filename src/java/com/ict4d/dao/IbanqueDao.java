@@ -36,13 +36,13 @@ public interface IbanqueDao {
     List<Client>  rechercherClientParMC(String MC);
     List<Employe>  rechercherEmployeParMC(String MC);
     
-    void retrait(Long codeEmploye,String codeCompte,double montant,String numeroTel);
-    void depot(Long codeEmploye,String codeCompte,double montant,String numeroTel);
+    void retrait(Long codeEmploye,String codeCompte,double montant);
+    void depot(Long codeEmploye,String codeCompte,double montant);
     void virementEffectuerParEmp(String codeCompte1,String codeCompte2,double montant,Long codeEmploye);
     
     boolean confirmerRetrait(String codeClient);
-    double consultersonSolde(String codeCompte,String codeClient);
-
+   
+    double consulterSolde(String codeClient);
     void virementEffectuerParCli(String codeCompte1,String codeCompte2,double montant);
     List<String> voirInformation();
     List<Operation> voirTransation(String codeClient);

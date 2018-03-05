@@ -40,7 +40,9 @@ import org.smslib.modem.SerialModemGateway;
 
 public class ReadMessages
 {
-        public void doIt() throws Exception
+    
+    String lastMessage=null;
+        public String doIt(String numcom,int baud,String numSim) throws Exception
         {
                 // Define a list which will hold the read messages.
                 List<InboundMessage> msgList;
@@ -55,10 +57,10 @@ public class ReadMessages
                 try
                 {
                         System.out.println("Example: Read messages from a serial gsm modem.");
-                        System.out.println(Library.getLibraryDescription());
-                        System.out.println("Version: " + Library.getLibraryVersion());
+                       
+                      
                         // Create the Gateway representing the serial GSM modem.
-                        SerialModemGateway gateway = new SerialModemGateway("modem.com8", "COM8",   9600, "", "");
+                        SerialModemGateway gateway = new SerialModemGateway("modem."+numcom.toLowerCase().trim(), numcom.trim(),baud, "", "");
                         // Set the modem protocol to PDU (alternative is TEXT). PDU is the default, anyway...
                         gateway.setProtocol(Protocols.PDU);
                         // Do we want the Gateway to be used for Inbound messages?
@@ -74,37 +76,26 @@ public class ReadMessages
                         Service.getInstance().setOrphanedMessageNotification(orphanedMessageNotification);
                         // Add the Gateway to the Service object.
                         Service.getInstance().addGateway(gateway);
-                        // Similarly, you may define as many Gateway objects, representing
-                        // various GSM modems, add them in the Service object and control all of them.
-                        // Start! (i.e. connect to all defined Gateways)
+                       
                         Service.getInstance().startService();
-                        // Printout some general information about the modem.
-                        System.out.println();
-                        System.out.println("Modem Information:");
-                        System.out.println("  Manufacturer: " + gateway.getManufacturer());
-                        System.out.println("  Model: " + gateway.getModel());
-                        System.out.println("  Serial No: " + gateway.getSerialNo());
-                        System.out.println("  SIM IMSI: " + gateway.getImsi());
-                        System.out.println("  Signal Level: " + gateway.getSignalLevel() + " dBm");
-                        System.out.println("  Battery Level: " + gateway.getBatteryLevel() + "%");
-                        System.out.println();
-                        // In case you work with encrypted messages, its a good time to declare your keys.
-                        // Create a new AES Key with a known key value. 
-                        // Register it in KeyManager in order to keep it active. SMSLib will then automatically
-                        // encrypt / decrypt all messages send to / received from this number.
-                        Service.getInstance().getKeyManager().registerKey("+237691966876", new AESKey(new SecretKeySpec("0011223344556677".getBytes(), "AES")));
-                        // Read Messages. The reading is done via the Service object and
-                        // affects all Gateway objects defined. This can also be more directed to a specific
-                        // Gateway - look the JavaDocs for information on the Service method calls.
+                   
+                        Service.getInstance().getKeyManager().registerKey(numSim.trim(), new AESKey(new SecretKeySpec("0011223344556677".getBytes(), "AES")));
+                       
                         msgList = new ArrayList<InboundMessage>();
                         Service.getInstance().readMessages(msgList, MessageClasses.ALL);
-                        for (InboundMessage msg : msgList)
-                                System.out.println(msg);
-                        // Sleep now. Emulate real world situation and give a chance to the notifications
-                        // methods to be called in the event of message or voice call reception.
+                        for(int i=0;i<msgList.size();i++){
+                                if(i==msgList.size()){
+                                    System.out.println(msgList.get(msgList.size()).toString());
+                                    lastMessage = msgList.get(msgList.size()).toString();
+                                    break;
+                                }
+                        }
+//                        for (InboundMessage msg : msgList)
+//                                System.out.println(msg);
+                       
                         System.out.println("Now Sleeping - Hit <enter> to stop service.");
                         System.in.read();
-                        System.in.read();
+                       
                 }
                
                 catch (Exception e)
@@ -115,6 +106,7 @@ public class ReadMessages
                 {
                         Service.getInstance().stopService();
                 }
+                return lastMessage;
         }
 
         public class InboundNotification implements IInboundMessageNotification
@@ -163,11 +155,12 @@ public class ReadMessages
                 ReadMessages app = new ReadMessages();
                 try
                 {
-                        app.doIt();
+                        //app.doIt();
                 }
                 catch (Exception e)
                 {
                         e.printStackTrace();
                 }
         }
+       
 }

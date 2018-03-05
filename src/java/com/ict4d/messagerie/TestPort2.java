@@ -5,7 +5,6 @@
  */
 package com.ict4d.messagerie;
 
-//import flashsms.systemGestion.SystemGestionSms;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -17,7 +16,7 @@ import org.smslib.helper.SerialPort;
  *
  * @author Tsafack
  */
-public class TestPort {
+public class TestPort2 {
     
     private static final String _NO_DEVICE_FOUND = "  no device found";
 
@@ -37,12 +36,9 @@ public class TestPort {
 	{
 		return CommPortIdentifier.getPortIdentifiers();
 	}
-//public SystemGestionSms sgs = new SystemGestionSms();
-	public String[] mainTest()
+
+	public static void main(String[] args)
 	{
-            boolean okPort = true; //est vrai lorsque le port a ete detect�
-            boolean okFreq = false;//est vrai lorsque le port a ete detect� pour avoir l'ens des freque valide
-            String[] port_freq = new String[10];
 		System.out.println("\nSearching for devices...");
 		portList = getCleanPortIdentifiers();
 		while (portList.hasMoreElements())
@@ -85,12 +81,6 @@ public class TestPort {
 						response = sb.toString();
 						if (response.indexOf("OK") >= 0)
 						{
-                                                    if(okPort){//si le port est valide
-                                                        port_freq[0] = portId.getName();//on recupere le port
-                                                      //  sgs.parametres[0] = portId.getName();
-                                                        okPort = false;//on met a false pour ne plus changer le port
-                                                        okFreq = true;//on met a true pour pouvoir selectionner l'ens des freq valide parmis les 9
-                                                    }
 							try
 							{
 								System.out.print("  Getting Info...");
@@ -110,21 +100,10 @@ public class TestPort {
 									c = inStream.read();
 								}
 								System.out.println(" Found: " + response.replaceAll("\\s+OK\\s+", "").replaceAll("\n", "").replaceAll("\r", ""));
-                                                                if(okFreq){ //est vrai pour selectionner les frequences vaides du port selectionn�
-                                                                    port_freq[i+1] = ""+bauds[i];//on selectionne les freqences valides
-                                                                    //idem pour recuperer les frequences
-                                                                    if(okPort){
-                                                                       // sgs.parametres[1] = ""+bauds[i];
-                                                                    }
-                                                                }
 							}
 							catch (Exception e)
 							{
 								System.out.println(_NO_DEVICE_FOUND);
-                                                                if(okFreq){
-                                                                    port_freq[i+1] = "";//on met a null pour les frequences non valides
-                                                                }
-                                                                
 							}
 						}
 						else
@@ -150,27 +129,8 @@ public class TestPort {
 						}
 					}
 				}
-                                okFreq = false;//on met a null pour ne pas modifier les parametres obtenues
 			}
 		}
 		System.out.println("\nTest complete.");
-                return port_freq;//le port est a l'indice 0 et les frequences suivent
-	}
-        public static void main(String args[])
-	{
-		//SendMessage app = new SendMessage();
-            TestPort port = new TestPort();
-		try
-		{
-                   // System.out.println( "port..."+ port.mainTest()[0]);
-                    System.out.println( "frequence.."+ port.mainTest()[1]+"port..."+ port.mainTest()[0]);
-                    
-                   
-			//app.doIt();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 	}
 }

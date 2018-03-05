@@ -46,6 +46,23 @@ private Long id;
     public Client() {
     }
 
+    public Compte getCompte() {
+        return compte;
+    }
+
+    public void setCompte(Compte compte) {
+        this.compte = compte;
+    }
+
+    public Collection<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Collection<Message> messages) {
+        this.messages = messages;
+    }
+    
+
     public Client(String code_client, String nom_client, String numero_tel) {
         this.code_client = code_client;
         this.nom_client = nom_client;
@@ -124,6 +141,13 @@ private Long id;
     @Override
     public String toString() {
         return "Client{" + "id=" + id + ", code_client=" + code_client + ", nom_client=" + nom_client + ", numero_tel=" + numero_tel + '}';
+    }
+
+    @Override
+    public String getRole() {
+        //throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
+return "Client";
     }
     
     

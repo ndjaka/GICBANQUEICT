@@ -17,18 +17,18 @@ import org.smslib.modem.SerialModemGateway;
 
 public class SendMessage
 {
-	public void doIt() throws Exception
+	public void doIt(String numcom,int baud,String message,String number,String numSinm) throws Exception
 	{
 		OutboundNotification outboundNotification = new OutboundNotification();
 		System.out.println("Envoie du message.");
 		//System.out.println(Library.getLibraryDescription());
 		//System.out.println("Version: " + Library.getLibraryVersion());
-		SerialModemGateway gateway = new SerialModemGateway("modem.com12", "COM12",   9600, "", "");
+		SerialModemGateway gateway = new SerialModemGateway("modem."+numcom.toLowerCase().trim(), numcom.trim(), baud, "", "");
 		gateway.setInbound(true);
 		gateway.setOutbound(true);
 		gateway.setSimPin("0000");
 		
-		gateway.setSmscNumber("+237691966876");
+		gateway.setSmscNumber(numSinm.trim());
 		Service.getInstance().setOutboundMessageNotification(outboundNotification);
 		Service.getInstance().addGateway(gateway);
 		Service.getInstance().startService();
@@ -36,7 +36,7 @@ public class SendMessage
 //	
 		
 		// Send a message synchronously.
-		OutboundMessage msg = new OutboundMessage("+237691621708", "Hello from SMSLib I make a test !");
+		OutboundMessage msg = new OutboundMessage(number.trim(), message);
 		Service.getInstance().sendMessage(msg);
 		System.out.println(msg);
 		
@@ -60,7 +60,7 @@ public class SendMessage
 		SendMessage app = new SendMessage();
 		try
 		{
-			app.doIt();
+			//app.doIt();
 		}
 		catch (Exception e)
 		{

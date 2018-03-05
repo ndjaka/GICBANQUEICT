@@ -46,7 +46,7 @@ public abstract class Operation implements Serializable {
     @ManyToOne
    @JoinColumn(name="CODE_EMP")
     private Employe employe;
-
+    
 
     public Operation() {
     }

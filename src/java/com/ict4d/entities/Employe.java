@@ -62,5 +62,12 @@ public class Employe extends User implements Serializable {
     public void setNomEmploye(String nomEmploye) {
         this.nomEmploye = nomEmploye;
     }
+
+    @Override
+    public String getRole() {
+        //throw new UnsupportedOperationException("Not supported yet."); 
+       //To change body of generated methods, choose Tools | Templates.
+       return "Employe";
+    }
     
 }

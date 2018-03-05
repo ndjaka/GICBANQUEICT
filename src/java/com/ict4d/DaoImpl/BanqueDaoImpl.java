@@ -18,7 +18,10 @@ import javax.persistence.PersistenceContext;
 
 import com.ict4d.dao.IbanqueDao;
 import com.ict4d.entities.CompteCourant;
+import com.ict4d.entities.Depot;
 import com.ict4d.entities.Retrait;
+import com.ict4d.entities.Virement;
+import javax.persistence.Query;
 
 /**
  *
@@ -130,34 +133,50 @@ public class BanqueDaoImpl  implements IbanqueDao{
     */
 
     @Override
-    public void retrait(Long codeEmploye, String codeCompte, double montant, String numeroTel) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-         //addOperation(new Retrait(new Date, montant), codeCompte, codeEmploye);
+    public void retrait(Long codeEmploye, String codeCompte, double montant) {
+       addOperation(new Retrait(new Date(), montant), codeCompte, codeEmploye);
+             
+            Compte cpte = consulterCompte(codeCompte);
+            cpte.setSolde(cpte.getSolde()-montant);
+             
+             
     }
 
     @Override
-    public void depot(Long codeEmploye, String codeCompte, double montant, String numeroTel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void depot(Long codeEmploye, String codeCompte, double montant) {
+         addOperation(new Depot(new Date(), montant), codeCompte, codeEmploye);
+             
+            Compte cpte = consulterCompte(codeCompte);
+            cpte.setSolde(cpte.getSolde()+montant);
+     }
 
     @Override
     public void virementEffectuerParEmp(String codeCompte1, String codeCompte2, double montant, Long codeEmploye) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet.");
+        //To change body of generated methods, choose Tools| Templates.
+        retrait(codeEmploye, codeCompte1, montant);
+        depot(codeEmploye, codeCompte2, montant);
+         Operation versement_parEmp = new Virement(codeCompte1, codeCompte2,new Date(), montant);
+         em.persist(versement_parEmp);
+         
     }
 
     @Override
     public boolean confirmerRetrait(String codeClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Client c = em.find(Client.class, codeClient);
+        return c != null;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public double consultersonSolde(String codeCompte, String codeClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     @Override
     public void virementEffectuerParCli(String codeCompte1, String codeCompte2, double montant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Operation versement_parCLient = new Virement(codeCompte1, codeCompte2,new Date(), montant);
+         em.persist(versement_parCLient);
+        
+       
     }
 
     @Override
@@ -167,7 +186,10 @@ public class BanqueDaoImpl  implements IbanqueDao{
 
     @Override
     public List<Operation> voirTransation(String codeClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools| Templates.
+        Query query = em.createQuery("select o from Operation o where o.compte.codeCompte=:x");
+        query.setParameter("x", codeClient);
+        return query.getResultList();
     }
 
     public void persist(Object object) {
@@ -178,8 +200,20 @@ public class BanqueDaoImpl  implements IbanqueDao{
     public Compte consulterCompte(String numCpte) {
         Compte cpte=em.find(Compte.class, numCpte);
         if(cpte==null) throw new RuntimeException("Compte "+numCpte+ "n'existe pas");
-        cpte.getOperations().size();
+         
         return cpte;
+    }
+
+    @Override
+    public double consulterSolde(String codeClient) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          Client cl =  em.find(Client.class, codeClient);
+          if(cl!=null){
+             
+              return  cl.getCompte().getSolde();
+          }else{
+              throw new RuntimeException("Compte "+cl.getCompte()+ "n'existe pas");
+          }
     }
 
   
