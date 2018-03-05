@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -28,6 +30,7 @@ public class Message implements Serializable {
     private Long id;
     private String objet;
     private String contenu;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateMessage;
     private String expediteur;
     private String recepteur;

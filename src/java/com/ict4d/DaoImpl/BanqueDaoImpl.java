@@ -5,7 +5,6 @@
  */
 package com.ict4d.DaoImpl;
 
-import com.ict4d.dao.IbanqueDao;
 import com.ict4d.entities.Client;
 import com.ict4d.entities.Compte;
 import com.ict4d.entities.Employe;
@@ -16,6 +15,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import com.ict4d.dao.IbanqueDao;
+import com.ict4d.entities.CompteCourant;
+import com.ict4d.entities.Retrait;
 
 /**
  *
@@ -28,19 +31,32 @@ public class BanqueDaoImpl  implements IbanqueDao{
     private EntityManager em;
 
     @Override
-    public Compte creerCompteClient(Compte compte, Client client) {
+    public Compte creerCompteClient(Compte compte, Long  codecli,Long codeEmp) {
+        Client client = em.find(Client.class, codecli);
+        Employe employe = em.find(Employe.class, codeEmp);
+        compte.setClient(client);
+        compte.setEmploye(employe);
+        em.persist(compte);
+             
        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); 
+        return compte;
+        
     }
 
     @Override
     public Employe creerCompteEmp(Employe emp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.persist(emp);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return emp;
     }
 
     @Override
     public void deleteEmploye(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      
+       Employe employe  = em.find(Employe.class, id);
+       em.remove(employe);
+       
     }
 
     @Override
@@ -50,7 +66,8 @@ public class BanqueDaoImpl  implements IbanqueDao{
 
     @Override
     public Compte updateCompteClient(Compte compte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            em.merge(compte);
+            return compte;
     }
 
     @Override
@@ -65,7 +82,16 @@ public class BanqueDaoImpl  implements IbanqueDao{
 
     @Override
     public Operation addOperation(Operation op, String codeCp, Long codeEmp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Date d = new Date(),dateOp ;
+        dateOp = new Date(d.getYear(), d.getMonth(), d.getDate());
+        Compte cp = consulterCompte(codeCp);
+        Employe employe = em.find(Employe.class, codeEmp);
+        op.setCompte(cp);
+        op.setEmploye(employe);
+        op.setDateOperation(dateOp);
+        em.persist(op);
+        return op;
     }
 
     @Override
@@ -97,10 +123,16 @@ public class BanqueDaoImpl  implements IbanqueDao{
     public List<Employe> rechercherEmployeParMC(String MC) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    /*
+    je vais faire appel a la fonction envoyer message
+    et dans la fonction envoyer je ferai appel a la fonction recevoir qui va me retourner le dernier mesaage
+    
+    */
 
     @Override
     public void retrait(Long codeEmploye, String codeCompte, double montant, String numeroTel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         //addOperation(new Retrait(new Date, montant), codeCompte, codeEmploye);
     }
 
     @Override
@@ -140,6 +172,14 @@ public class BanqueDaoImpl  implements IbanqueDao{
 
     public void persist(Object object) {
         em.persist(object);
+    }
+
+    @Override
+    public Compte consulterCompte(String numCpte) {
+        Compte cpte=em.find(Compte.class, numCpte);
+        if(cpte==null) throw new RuntimeException("Compte "+numCpte+ "n'existe pas");
+        cpte.getOperations().size();
+        return cpte;
     }
 
   

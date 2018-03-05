@@ -17,10 +17,11 @@
 // 4) Setup callback notifications.
 // 5) Run
 
-package com.ict4d.service;
+package com.ict4d.messagerie;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 import javax.crypto.spec.SecretKeySpec;
 import org.smslib.AGateway;
 import org.smslib.AGateway.GatewayStatuses;
@@ -105,6 +106,7 @@ public class ReadMessages
                         System.in.read();
                         System.in.read();
                 }
+               
                 catch (Exception e)
                 {
                         e.printStackTrace();

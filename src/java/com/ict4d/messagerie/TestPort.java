@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ict4d.service;
+package com.ict4d.messagerie;
 
 import java.io.InputStream;
 import java.io.OutputStream;

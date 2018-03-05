@@ -22,7 +22,7 @@ import javax.persistence.InheritanceType;
  * @author admin
  */
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="TYPE_USER",discriminatorType=DiscriminatorType.STRING,length = 3)
 public abstract class User implements Serializable {
     private static final long serialVersionUID = 1L;
